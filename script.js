@@ -129,12 +129,21 @@ function rollPitch(){
 
         if(gameState.strikes >= 3){
 
-            gameState.outs++;
+    		gameState.outs++;
 
-            gameState.strikes = 0;
+    		gameState.strikes = 0;
 
-            addLog("OUT");
-        }
+    		addLog("OUT");
+
+   		nextBatter();
+
+    		if(gameState.outs >= 3){
+
+        		addLog("SIDE RETIRED");
+
+        		nextHalfInning();
+    		}
+	}
 
     }else if(defense === attack){
 
@@ -148,16 +157,19 @@ function rollPitch(){
 	if(roll <= 3){
 
     		single();
+		nextBatter();
 
 	}
 	else if(roll <= 5){
 
     		doubleHit();
+		nextBatter();
 
 	}
 	else{
 
     		homeRun();
+		nextBatter();
 	}
     }
 
@@ -285,6 +297,8 @@ function scoreRun(){
 
 function nextHalfInning(){
 
+    addLog("CHANGING SIDES");
+
     gameState.outs = 0;
     gameState.strikes = 0;
     gameState.balls = 0;
@@ -303,16 +317,17 @@ function nextHalfInning(){
         gameState.inning++;
     }
 
-    document.getElementById("inning")
-        .innerText =
+    document.getElementById("inning").innerText =
         `${gameState.half} ${gameState.inning}`;
 
     updateBases();
+    updateUI();
 }
 
-if(gameState.outs >= 3){
+function nextBatter(){
 
-    addLog("SIDE RETIRED");
+    gameState.strikes = 0;
+    gameState.balls = 0;
 
-    nextHalfInning();
+    updateUI();
 }
