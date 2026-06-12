@@ -2,7 +2,9 @@ let selectedCard = null;
 
 let playerHand = [];
 
-const pitchDeck = [
+let aiHand = [];
+
+const defenseDeck = [
     "4SFB",
     "2SFB",
     "Sinker",
@@ -12,8 +14,27 @@ const pitchDeck = [
     "Forkball",
     "Slider",
     "Sweeper",
-    "Splitter"
+    "Splitter",
+    "Defense Boost",
+    "Ground Out",
+    "Pop Out",
+    "Fly Out",
+    "HR Robbing"
 ];
+
+function shuffle(array){
+
+    for(let i = array.length - 1; i > 0; i--){
+
+        const j =
+            Math.floor(Math.random() * (i + 1));
+
+        [array[i], array[j]] =
+            [array[j], array[i]];
+    }
+
+    return array;
+}
 
 const gameState = {
     inning: 1,
@@ -38,6 +59,8 @@ function startGame(){
 
     drawHand();
 
+    drawAiHand();
+
     addLog("Game Started");
 }
 
@@ -45,17 +68,24 @@ function drawHand(){
 
     playerHand = [];
 
-    for(let i = 0; i < 5; i++){
+    const shuffledDeck =
+        shuffle([...defenseDeck]);
 
-        const randomCard =
-            pitchDeck[
-                Math.floor(Math.random() * pitchDeck.length)
-            ];
-
-        playerHand.push(randomCard);
-    }
+    playerHand =
+        shuffledDeck.slice(0,5);
 
     renderHand();
+}
+
+function drawAiHand(){
+
+    aiHand = [
+        "Contact",
+        "Power",
+        "Bunt",
+        "Contact",
+        "Power"
+    ];
 }
 
 function renderHand(){
@@ -124,15 +154,20 @@ function getPitchModifier(card){
 
 function aiCard(){
 
-    const cards = [
-        "Contact",
-        "Power",
-        "Bunt"
-    ];
+    if(aiHand.length === 0){
 
-    return cards[
-        Math.floor(Math.random()*cards.length)
-    ];
+        return null;
+    }
+
+    const index =
+        Math.floor(Math.random() * aiHand.length);
+
+    const card =
+        aiHand[index];
+
+    aiHand.splice(index,1);
+
+    return card;
 }
 
 function getBatModifier(card){
@@ -394,6 +429,8 @@ function nextHalfInning(){
         `${gameState.half} ${gameState.inning}`;
 
     drawHand();
+
+    drawAiHand();
 
     updateBases();
     updateUI();
