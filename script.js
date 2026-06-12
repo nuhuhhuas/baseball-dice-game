@@ -60,6 +60,8 @@ function drawHand(){
 
 function renderHand(){
 
+    console.log("HAND:", playerHand);
+
     const cardArea =
         document.querySelector(".cards");
 
