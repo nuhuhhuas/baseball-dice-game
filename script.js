@@ -1,5 +1,7 @@
 let selectedCard = null;
 
+let defenseBoostActive = false;
+
 let playerHand = [];
 
 let aiHand = [];
@@ -108,6 +110,17 @@ function renderHand(){
 
 function playCard(card){
 
+    if(card === "Defense Boost"){
+
+        defenseBoostActive = true;
+
+        selectedCard = card;
+
+        addLog("Defense Boost Activated");
+
+        return;
+    }
+
     selectedCard = card;
 
     addLog("Selected: " + card);
@@ -197,7 +210,14 @@ function rollPitch(){
     const atk2 = rollD6();
 
     let defense =
-        def1 + def2;
+    	def1 + def2;
+
+    if(defenseBoostActive){
+
+    	defense += 3;
+
+    	addLog("Defense Boost +3");
+    }
 
     let attack =
         atk1 + atk2;
@@ -280,6 +300,8 @@ function rollPitch(){
     discardSelectedCard();
 
     selectedCard = null;
+
+    defenseBoostActive = false;
 
     updateUI();
 }
