@@ -87,13 +87,6 @@ function playCard(card){
 
         playerHand.splice(index,1);
 
-        const randomCard =
-            pitchDeck[
-                Math.floor(Math.random()*pitchDeck.length)
-            ];
-
-        playerHand.push(randomCard);
-
         renderHand();
     }
 
