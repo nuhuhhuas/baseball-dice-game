@@ -1,5 +1,20 @@
 let selectedCard = null;
 
+let playerHand = [];
+
+const pitchDeck = [
+    "4SFB",
+    "2SFB",
+    "Sinker",
+    "Curveball",
+    "Cutter",
+    "Changeup",
+    "Forkball",
+    "Slider",
+    "Sweeper",
+    "Splitter"
+];
+
 const gameState = {
     inning: 1,
     half: "TOP",
@@ -21,12 +36,64 @@ function startGame(){
     document.getElementById("menu").classList.add("hidden");
     document.getElementById("game").classList.remove("hidden");
 
+    drawHand();
+
     addLog("Game Started");
+}
+
+function drawHand(){
+
+    playerHand = [];
+
+    for(let i = 0; i < 5; i++){
+
+        const randomCard =
+            pitchDeck[
+                Math.floor(Math.random() * pitchDeck.length)
+            ];
+
+        playerHand.push(randomCard);
+    }
+
+    renderHand();
+}
+
+function renderHand(){
+
+    const cardArea =
+        document.querySelector(".cards");
+
+    cardArea.innerHTML =
+        "<h3>Your Hand</h3>";
+
+    playerHand.forEach(card => {
+
+        cardArea.innerHTML +=
+            `<button onclick="playCard('${card}')">${card}</button>`;
+
+    });
 }
 
 function playCard(card){
 
     selectedCard = card;
+
+    const index =
+        playerHand.indexOf(card);
+
+    if(index > -1){
+
+        playerHand.splice(index,1);
+
+        const randomCard =
+            pitchDeck[
+                Math.floor(Math.random()*pitchDeck.length)
+            ];
+
+        playerHand.push(randomCard);
+
+        renderHand();
+    }
 
     addLog("Player selected " + card);
 }
