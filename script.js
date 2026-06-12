@@ -105,13 +105,11 @@ function drawHand(){
 
 function drawAiHand(){
 
-    aiHand = [
-        "Contact",
-        "Power",
-        "Bunt",
-        "Contact",
-        "Power"
-    ];
+    const shuffledDeck =
+        shuffle([...attackDeck]);
+
+    aiHand =
+        shuffledDeck.slice(0,5);
 }
 
 function renderHand(){
@@ -256,7 +254,10 @@ function rollPitch(){
 
     const aiChoice = aiCard();
 
-    attack += getBatModifier(aiChoice);
+    if(aiChoice){
+
+    	attack += getBatModifier(aiChoice);
+    }
 
     document.getElementById("defRoll")
         .innerText =
@@ -267,7 +268,14 @@ function rollPitch(){
         `${atk1}+${atk2} = ${attack}`;
 
     addLog("Pitcher used: " + selectedCard);
-    addLog("Batter used: " + aiChoice);
+    addLog(
+    	"Pitcher used: " +
+    	(selectedChoice || "No Card")
+    );
+    addLog(
+    	"Batter used: " +
+    	(aiChoice || "No Card")
+    );
 
     if(defense > attack){
 
