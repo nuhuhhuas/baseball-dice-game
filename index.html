@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Baseball Dice Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="menu">
+    <h1>⚾ Baseball Dice Game</h1>
+    <button onclick="startGame()">Play vs AI</button>
+</div>
+
+<div id="game" class="hidden">
+
+    <div class="scoreboard">
+        <h2 id="inning">TOP 1ST</h2>
+        <div>Home: <span id="homeScore">0</span></div>
+        <div>Away: <span id="awayScore">0</span></div>
+    </div>
+
+    <div class="counts">
+        <div>Balls: <span id="balls">0</span></div>
+        <div>Strikes: <span id="strikes">0</span></div>
+        <div>Outs: <span id="outs">0</span></div>
+    </div>
+
+    <div class="diamond">
+        <div id="second">2B</div>
+        <div>
+            <span id="third">3B</span>
+            <span id="first">1B</span>
+        </div>
+        <div>HOME</div>
+    </div>
+
+    <div class="phase" id="phase">
+        PITCHING/BATTING PHASE
+    </div>
+
+    <div class="diceArea">
+        <h3>Defense Roll</h3>
+        <div id="defRoll">-</div>
+
+        <h3>Attack Roll</h3>
+        <div id="atkRoll">-</div>
+    </div>
+
+    <div class="cards">
+        <h3>Your Hand</h3>
+
+        <button onclick="playCard('4SFB')">4SFB</button>
+        <button onclick="playCard('Splitter')">Splitter</button>
+        <button onclick="playCard('Curveball')">Curveball</button>
+        <button onclick="playCard('Defense Boost')">Defense Boost</button>
+        <button onclick="playCard('Ground Out')">Ground Out</button>
+    </div>
+
+    <div class="controls">
+        <button onclick="rollPitch()">Roll Dice</button>
+    </div>
+
+    <div class="log">
+        <h3>Game Log</h3>
+        <div id="log"></div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

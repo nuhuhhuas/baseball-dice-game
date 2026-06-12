@@ -1,0 +1,57 @@
+body{
+    font-family: Arial, sans-serif;
+    background:#1f1f1f;
+    color:white;
+    text-align:center;
+}
+
+.hidden{
+    display:none;
+}
+
+button{
+    padding:10px;
+    margin:5px;
+    cursor:pointer;
+}
+
+.scoreboard{
+    margin:20px;
+}
+
+.counts{
+    margin:20px;
+}
+
+.diamond{
+    margin:20px;
+    font-size:20px;
+}
+
+#first,
+#second,
+#third{
+    padding:10px;
+}
+
+.phase{
+    margin:20px;
+    font-weight:bold;
+    font-size:22px;
+}
+
+.diceArea{
+    margin:20px;
+}
+
+.cards{
+    margin:20px;
+}
+
+.log{
+    margin:20px;
+    border:1px solid white;
+    padding:10px;
+    height:200px;
+    overflow-y:auto;
+}
