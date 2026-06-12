@@ -80,17 +80,24 @@ function playCard(card){
 
     selectedCard = card;
 
+    addLog("Selected: " + card);
+
+    renderHand();
+}
+
+function discardSelectedCard(){
+
+    if(!selectedCard) return;
+
     const index =
-        playerHand.indexOf(card);
+        playerHand.indexOf(selectedCard);
 
     if(index > -1){
 
         playerHand.splice(index,1);
-
-        renderHand();
     }
 
-    addLog("Player selected " + card);
+    renderHand();
 }
 
 function rollD6(){
@@ -234,6 +241,8 @@ function rollPitch(){
 		nextBatter();
 	}
     }
+
+    discardSelectedCard();
 
     selectedCard = null;
 
