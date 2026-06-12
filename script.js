@@ -6,6 +6,30 @@ let playerHand = [];
 
 let aiHand = [];
 
+const attackDeck = [
+    "Contact",
+    "Contact",
+
+    "Power",
+    "Power",
+
+    "Bunt",
+    "Bunt",
+
+    "Batting Eye",
+    "Batting Eye",
+
+    "Intimidating Batter",
+    "Intimidating Batter",
+
+    "Home Run",
+    "Single",
+    "Double",
+    "Triple",
+    "Speed",
+    "Steal"
+];
+
 const defenseDeck = [
     "4SFB",
     "2SFB",
