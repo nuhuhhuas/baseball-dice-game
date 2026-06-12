@@ -1,15 +1,19 @@
 let selectedCard = null;
 
 const gameState = {
-    inning:1,
-    half:"TOP",
+    inning: 1,
+    half: "TOP",
 
-    balls:0,
-    strikes:0,
-    outs:0,
+    balls: 0,
+    strikes: 0,
+    outs: 0,
 
-    homeScore:0,
-    awayScore:0
+    homeScore: 0,
+    awayScore: 0,
+
+    first: false,
+    second: false,
+    third: false
 };
 
 function startGame(){
@@ -138,7 +142,23 @@ function rollPitch(){
 
     }else{
 
-        addLog("HIT");
+        const roll =
+    		rollD6();
+
+	if(roll <= 3){
+
+    		single();
+
+	}
+	else if(roll <= 5){
+
+    		doubleHit();
+
+	}
+	else{
+
+    		homeRun();
+	}
     }
 
     updateUI();
@@ -169,4 +189,130 @@ function addLog(text){
 
     log.scrollTop =
         log.scrollHeight;
+}
+
+function updateBases(){
+
+    document.getElementById("firstBase")
+        .innerText =
+        gameState.first ? "●" : "○";
+
+    document.getElementById("secondBase")
+        .innerText =
+        gameState.second ? "●" : "○";
+
+    document.getElementById("thirdBase")
+        .innerText =
+        gameState.third ? "●" : "○";
+}
+
+function single(){
+
+    if(gameState.third){
+
+        scoreRun();
+    }
+
+    gameState.third = gameState.second;
+    gameState.second = gameState.first;
+    gameState.first = true;
+
+    updateBases();
+
+    addLog("Single");
+}
+
+function doubleHit(){
+
+    if(gameState.third){
+        scoreRun();
+    }
+
+    if(gameState.second){
+        scoreRun();
+    }
+
+    gameState.third = gameState.first;
+
+    gameState.second = true;
+    gameState.first = false;
+
+    updateBases();
+
+    addLog("Double");
+}
+
+function homeRun(){
+
+    let runs = 1;
+
+    if(gameState.first) runs++;
+    if(gameState.second) runs++;
+    if(gameState.third) runs++;
+
+    for(let i=0;i<runs;i++){
+        scoreRun();
+    }
+
+    gameState.first = false;
+    gameState.second = false;
+    gameState.third = false;
+
+    updateBases();
+
+    addLog("HOME RUN!");
+}
+
+function scoreRun(){
+
+    if(gameState.half === "TOP"){
+
+        gameState.awayScore++;
+
+    }else{
+
+        gameState.homeScore++;
+    }
+
+    document.getElementById("homeScore")
+        .innerText =
+        gameState.homeScore;
+
+    document.getElementById("awayScore")
+        .innerText =
+        gameState.awayScore;
+}
+
+function nextHalfInning(){
+
+    gameState.outs = 0;
+    gameState.strikes = 0;
+    gameState.balls = 0;
+
+    gameState.first = false;
+    gameState.second = false;
+    gameState.third = false;
+
+    if(gameState.half === "TOP"){
+
+        gameState.half = "BOTTOM";
+
+    }else{
+
+        gameState.half = "TOP";
+        gameState.inning++;
+    }
+
+    document.getElementById("inning")
+        .innerText =
+        `${gameState.half} ${gameState.inning}`;
+
+    updateBases();
+}
+
+if(gameState.outs >= 3){
+
+    addLog("SIDE RETIRED");
+
+    nextHalfInning();
 }
