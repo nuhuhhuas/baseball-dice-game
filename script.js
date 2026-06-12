@@ -235,6 +235,8 @@ function rollPitch(){
 	}
     }
 
+    selectedCard = null;
+
     updateUI();
 }
 
@@ -381,6 +383,8 @@ function nextHalfInning(){
 
     document.getElementById("inning").innerText =
         `${gameState.half} ${gameState.inning}`;
+
+    drawHand();
 
     updateBases();
     updateUI();
