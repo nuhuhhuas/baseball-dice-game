@@ -80,6 +80,8 @@ const gameState = {
     phase: "PREPARE",
 
     pendingResult: null
+
+    fieldingChoice: null
 };
 
 function startGame(){
@@ -139,6 +141,20 @@ function renderHand(){
 }
 
 function playCard(card){
+
+    const cardPhase =
+    	getCardPhase(card);
+
+    if(cardPhase !== gameState.phase){
+
+    	addLog(
+        	card +
+        	" cannot be played during " +
+        	gameState.phase
+    	);
+
+    	return;
+    }
 
     if(card === "Defense Boost"){
 
@@ -551,11 +567,13 @@ function continuePhase(){
 
     if(gameState.phase === "PREPARE"){
 
-        gameState.phase = "AT-BAT";
+    	selectedCard = null;
 
-        updateUI();
+    	gameState.phase = "AT-BAT";
 
-        return;
+    	updateUI();
+
+    	return;
     }
 
     if(gameState.phase === "REACTION"){
