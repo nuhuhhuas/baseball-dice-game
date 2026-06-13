@@ -266,24 +266,6 @@ function rollPitch(){
     	addLog("Defense Boost: +3");
     }
 
-    defense += 0;
-
-    attack += 0;
-
-    if(selectedCard){
-
-    	pitchMod =
-        	getPitchModifier(selectedCard);
-
-    	attack += pitchMod;
-
-    	addLog(
-        	selectedCard +
-        	": " +
-        	pitchMod
-    	);
-    }
-
     const aiChoice = aiCard();
 
     if(aiChoice === "Batting Eye"){
@@ -304,6 +286,20 @@ function rollPitch(){
 
     let attack =
     	atk1 + atk2;
+
+    if(selectedCard){
+
+    	pitchMod =
+        	getPitchModifier(selectedCard);
+
+    	attack += pitchMod;
+
+    	addLog(
+        	selectedCard +
+        	": " +
+        	pitchMod
+    	);
+    }
 
     if(aiChoice){
 
