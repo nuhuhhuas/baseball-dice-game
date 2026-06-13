@@ -81,7 +81,10 @@ const gameState = {
 
     pendingResult: null,
 
-    fieldingChoice: null
+    fieldingChoice: null,
+	
+    playerRole: "DEFENSE"
+
 };
 
 function startGame(){
@@ -104,8 +107,13 @@ function drawHand(){
 
     playerHand = [];
 
+    const deck =
+        gameState.playerRole === "DEFENSE"
+        ? defenseDeck
+        : attackDeck;
+
     const shuffledDeck =
-        shuffle([...defenseDeck]);
+        shuffle([...deck]);
 
     playerHand =
         shuffledDeck.slice(0,5);
@@ -565,6 +573,11 @@ function rollPitch(){
 
 function updateUI(){
 
+    document.getElementById("role")
+    	.innerText =
+    	"Role: " +
+    	gameState.playerRole;
+
     document.getElementById("balls")
         .innerText =
         gameState.balls;
@@ -794,6 +807,15 @@ function nextHalfInning(){
 
         gameState.half = "TOP";
         gameState.inning++;
+    }
+
+    if(gameState.playerRole === "DEFENSE"){
+
+    	gameState.playerRole = "OFFENSE";
+
+    }else{
+
+    	gameState.playerRole = "DEFENSE";
     }
 
     document.getElementById("inning").innerText =
