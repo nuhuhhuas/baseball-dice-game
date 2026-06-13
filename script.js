@@ -76,6 +76,8 @@ const gameState = {
     first: false,
     second: false,
     third: false
+
+    phase: "prepare",
 };
 
 function startGame(){
@@ -86,6 +88,10 @@ function startGame(){
     drawHand();
 
     drawAiHand();
+
+    gameState.phase = "PREPARE";
+
+    updateUI();
 
     addLog("Game Started");
 }
@@ -247,6 +253,10 @@ function getBatModifier(card){
 
 function rollPitch(){
 
+    gameState.phase = "AT-BAT";
+
+    updateUI();
+
     const def1 = rollD6();
     const def2 = rollD6();
 
@@ -390,36 +400,21 @@ function rollPitch(){
 
     }else{
 
-    	if(atk1 === atk2){
+    	if(atk1 === 6 && atk2 === 6){
 
-        	if(atk1 <= 2){
+        	addLog("TWIN 6! HOME RUN!");
 
-            		addLog("TWIN! SINGLE!");
-            		single();
+        	homeRun();
 
-        	}else if(atk1 <= 4){
-
-            		addLog("TWIN! DOUBLE!");
-            		doubleHit();
-
-        	}else if(atk1 === 5){
-
-            		addLog("TWIN! TRIPLE!");
-            		tripleHit();
-
-        	}else{
-
-            		addLog("TWIN! HOME RUN!");
-            		homeRun();
-        	}
+        	nextBatter();
 
     	}else{
 
         	addLog("HIT!");
-        	single();
-    	}
 
-    	nextBatter();
+        	gameState.phase = "REACTION";
+
+    	}
     }
 
     discardSelectedCard();
@@ -444,6 +439,10 @@ function updateUI(){
     document.getElementById("outs")
         .innerText =
         gameState.outs;
+
+    document.getElementById("phase")
+    	.innerText =
+    	"Phase: " + gameState.phase;
 }
 
 function addLog(text){
