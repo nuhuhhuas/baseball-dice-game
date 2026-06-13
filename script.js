@@ -398,7 +398,17 @@ function rollPitch(){
 
     }else if(defense === attack){
 
-        addLog("FOUL");
+    	addLog("FOUL");
+
+    	if(gameState.strikes < 2){
+
+        	gameState.strikes++;
+
+        	addLog(
+            	"Strike Count: " +
+            	gameState.strikes
+        	);
+    	}
 
     }else{
 
