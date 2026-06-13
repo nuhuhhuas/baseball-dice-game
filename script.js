@@ -272,15 +272,23 @@ function rollPitch(){
 
     	if(atk1 <= atk2){
 
+        	const oldRoll = atk1;
+
         	atk1 = rollD6();
 
-        	addLog("Batting Eye: Rerolled Attack Dice 1");
+        	addLog(
+            		`Batting Eye: Die 1 ${oldRoll} → ${atk1}`
+        	);
 
     	}else{
 
+        	const oldRoll = atk2;
+
         	atk2 = rollD6();
 
-        	addLog("Batting Eye: Rerolled Attack Dice 2");
+        	addLog(
+            		`Batting Eye: Die 2 ${oldRoll} → ${atk2}`
+        	);
     	}
     }
 
@@ -331,7 +339,7 @@ function rollPitch(){
     );
 
     addLog(
-    	`Attack Roll: ${atk1}+${atk2}${batMod >= 0 ? "+" : ""}${batMod}${pitchMod >= 0 ? "+" : ""}${pitchMod} = ${attack}`
+    	`Attack Roll: ${atk1}+${atk2} = ${attack}`
     );
 
     document.getElementById("defRoll")
