@@ -79,7 +79,7 @@ const gameState = {
 
     phase: "PREPARE",
 
-    pendingResult: null
+    pendingResult: null,
 
     fieldingChoice: null
 };
