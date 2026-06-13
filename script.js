@@ -250,48 +250,41 @@ function rollPitch(){
     const def1 = rollD6();
     const def2 = rollD6();
 
-    const atk1 = rollD6();
-    const atk2 = rollD6();
+    let atk1 = rollD6();
+    let atk2 = rollD6();
 
     let defense =
     	def1 + def2;
+
+    let pitchMod = 0;
+    let batMod = 0;
 
     if(defenseBoostActive){
 
     	defense += 3;
 
-    	addLog("Defense Boost +3");
+    	addLog("Defense Boost: +3");
     }
-
-    let attack =
-        atk1 + atk2;
 
     defense += 0;
 
     attack += 0;
 
     if(selectedCard){
-        attack += getPitchModifier(selectedCard);
+
+    	pitchMod =
+        	getPitchModifier(selectedCard);
+
+    	attack += pitchMod;
+
+    	addLog(
+        	selectedCard +
+        	": " +
+        	pitchMod
+    	);
     }
 
     const aiChoice = aiCard();
-
-    if(aiChoice){
-
-    	attack += getBatModifier(aiChoice);
-    }
-
-    if(aiChoice === "Contact"){
-    	addLog("Contact +2");
-    }
-
-    if(aiChoice === "Power"){
-    	addLog("Power +3");
-    }
-
-    if(aiChoice === "Intimidating Batter"){
-    	addLog("Intimidating Batter +2");
-    }
 
     if(aiChoice === "Batting Eye"){
 
@@ -299,23 +292,51 @@ function rollPitch(){
 
         	atk1 = rollD6();
 
-        	addLog("Batting Eye rerolled Attack Die 1");
+        	addLog("Batting Eye: Rerolled Attack Dice 1");
 
     	}else{
 
         	atk2 = rollD6();
 
-        	addLog("Batting Eye rerolled Attack Die 2");
+        	addLog("Batting Eye: Rerolled Attack Dice 2");
     	}
     }
 
-    if(aiChoice === "Bunt"){
+    let attack =
+    	atk1 + atk2;
 
-    	addLog("Bunt -4");
-    	addLog("Bunt! All runners advance 1 base.");
+    if(aiChoice){
 
-    	buntAdvance();
+    	batMod =
+        	getBatModifier(aiChoice);
+
+    	attack += batMod;
+
+    	if(batMod !== 0){
+
+        	addLog(
+            		aiChoice +
+            		": " +
+            		(batMod > 0 ? "+" : "") +
+            		batMod
+        	);
+    	}
+
+    	if(aiChoice === "Bunt"){
+
+        	addLog("Bunt: All runners advance 1 base.");
+
+        	buntAdvance();
+    	}
     }
+
+    addLog(
+    	`Defense Roll: ${def1}+${def2} = ${defense}`
+    );
+
+    addLog(
+    	`Attack Roll: ${atk1}+${atk2}${batMod >= 0 ? "+" : ""}${batMod}${pitchMod >= 0 ? "+" : ""}${pitchMod} = ${attack}`
+    );
 
     document.getElementById("defRoll")
         .innerText =
