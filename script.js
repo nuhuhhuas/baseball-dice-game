@@ -2,6 +2,9 @@ let selectedCard = null;
 
 let defenseBoostActive = false;
 
+let speedActive = false;
+let stealActive = false;
+
 let playerHand = [];
 
 let aiHand = [];
@@ -171,6 +174,28 @@ function playCard(card){
     	addLog("Defense Boost Activated");
 
 	discardCard(card);
+
+    	return;
+    }
+
+    if(card === "Speed"){
+
+    	speedActive = true;
+
+    	addLog("Speed Activated");
+
+    	discardCard(card);
+
+    	return;
+    }
+
+    if(card === "Steal"){
+
+    	stealActive = true;
+
+    	addLog("Steal Activated");
+
+    	discardCard(card);
 
     	return;
     }
