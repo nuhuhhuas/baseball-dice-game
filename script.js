@@ -45,7 +45,7 @@ const defenseDeck = [
     "Ground Out",
     "Pop Out",
     "Fly Out",
-    "HR Robbing"
+    "Home Run Robbing"
 ];
 
 function shuffle(array){
