@@ -696,5 +696,7 @@ function nextBatter(){
     gameState.strikes = 0;
     gameState.balls = 0;
 
+    gameState.phase = "PREPARE";
+
     updateUI();
 }
