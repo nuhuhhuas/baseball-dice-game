@@ -268,14 +268,7 @@ function rollPitch(){
         `${atk1}+${atk2} = ${attack}`;
 
     addLog("Pitcher used: " + selectedCard);
-    addLog(
-    	"Pitcher used: " +
-    	(selectedChoice || "No Card")
-    );
-    addLog(
-    	"Batter used: " +
-    	(aiChoice || "No Card")
-    );
+    addLog("Batter used: " + aiChoice);    
 
     if(defense > attack){
 
