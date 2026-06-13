@@ -484,6 +484,35 @@ function updateUI(){
     	"Phase: " + gameState.phase;
 }
 
+function continuePhase(){
+
+    if(gameState.phase === "REACTION"){
+
+        if(gameState.pendingResult === "HOME_RUN"){
+
+            homeRun();
+
+            nextBatter();
+
+            addLog("HOME RUN!");
+
+        }else if(gameState.pendingResult === "HIT"){
+
+            single();
+
+            nextBatter();
+
+            addLog("Single!");
+        }
+
+        gameState.pendingResult = null;
+
+        gameState.phase = "END";
+
+        updateUI();
+    }
+}
+
 function addLog(text){
 
     const log =
