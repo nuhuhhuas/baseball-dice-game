@@ -372,6 +372,32 @@ function rollPitch(){
     	(aiChoice || "No Card")
     );    
 
+    if(defense <= 3){
+
+    	gameState.balls++;
+
+    	addLog("BALL");
+
+    	if(gameState.balls >= 4){
+
+        	addLog("WALK");
+
+        	single();
+
+        	nextBatter();
+    	}
+
+    	updateUI();
+
+    	discardSelectedCard();
+
+    	selectedCard = null;
+
+    	defenseBoostActive = false;
+
+    	return;
+    }
+
     if(defense > attack){
 
         gameState.strikes++;
