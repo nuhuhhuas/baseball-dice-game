@@ -267,7 +267,11 @@ function rollPitch(){
         .innerText =
         `${atk1}+${atk2} = ${attack}`;
 
-    addLog("Pitcher used: " + selectedCard);
+    addLog(
+    	"Pitcher used: " +
+    	(selectedCard || "No Card")
+    );
+
     addLog(
     	"Batter used: " +
     	(aiChoice || "No Card")
