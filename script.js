@@ -175,10 +175,31 @@ function getPitchModifier(card){
             return -1;
 
         case "Curveball":
+            return -2;
+
+        case "2SFB":
+            return -2;
+
+        case "Sinker":
             return -3;
 
+        case "Changeup":
+            return -4;
+
+        case "Cutter":
+            return -4;
+
+        case "Forkball":
+            return -5;
+
+        case "Slider":
+            return -5;
+
+        case "Sweeper":
+            return -5;
+
         case "Splitter":
-            return -7;
+            return -6;
 
         default:
             return 0;
