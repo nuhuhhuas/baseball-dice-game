@@ -146,6 +146,8 @@ function playCard(card){
 
     	addLog("Defense Boost Activated");
 
+	discardCard(card);
+
     	return;
     }
 
@@ -523,8 +525,6 @@ function rollPitch(){
 
     selectedCard = null;
 
-    defenseBoostActive = false;
-
     updateUI();
 }
 
@@ -752,7 +752,22 @@ function nextBatter(){
     gameState.strikes = 0;
     gameState.balls = 0;
 
+    defenseBoostActive = false;
+
     gameState.phase = "PREPARE";
 
     updateUI();
+}
+
+function discardCard(card){
+
+    const index =
+        playerHand.indexOf(card);
+
+    if(index > -1){
+
+        playerHand.splice(index,1);
+    }
+
+    renderHand();
 }
