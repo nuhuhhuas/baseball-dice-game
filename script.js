@@ -167,6 +167,25 @@ function playCard(card){
     	return;
     }
 
+    if(gameState.phase === "FIELDING"){
+
+    	if(
+        	card === "Single" ||
+        	card === "Double" ||
+        	card === "Triple"
+    	){
+
+        	gameState.fieldingChoice = card;
+
+        	addLog(
+            		"Fielding Card Selected: " +
+            		card
+        	);
+
+        	return;
+    	}
+    }
+
     selectedCard = card;
 
     addLog("Selected: " + card);
@@ -595,12 +614,29 @@ function continuePhase(){
 
     	}else if(gameState.pendingResult === "HIT"){
 
-        	single();
+    		if(gameState.fieldingChoice === "Triple"){
 
-        	addLog("Single!");
-    	}
+        		tripleHit();
+
+        		addLog("Triple!");
+
+    		}else if(gameState.fieldingChoice === "Double"){
+
+        		doubleHit();
+
+        		addLog("Double!");
+
+    		}else{
+
+        		single();
+
+        		addLog("Single!");
+    		}
+	}
 
     	gameState.pendingResult = null;
+
+	gameState.fieldingChoice = null;
 
     	nextBatter();
 
