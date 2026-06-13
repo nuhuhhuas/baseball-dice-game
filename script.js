@@ -75,9 +75,11 @@ const gameState = {
 
     first: false,
     second: false,
-    third: false
+    third: false,
 
-    phase: "prepare",
+    phase: "PREPARE",
+
+    pendingResult: null
 };
 
 function startGame(){
@@ -402,19 +404,20 @@ function rollPitch(){
 
     	if(atk1 === 6 && atk2 === 6){
 
-        	addLog("TWIN 6! HOME RUN!");
+        	addLog("TWIN 6! POTENTIAL HOME RUN!");
 
-        	homeRun();
-
-        	nextBatter();
+        	gameState.pendingResult = "HOME_RUN";
 
     	}else{
 
         	addLog("HIT!");
 
-        	gameState.phase = "REACTION";
-
+        	gameState.pendingResult = "HIT";
     	}
+
+    	gameState.phase = "REACTION";
+
+    	updateUI();
     }
 
     discardSelectedCard();
