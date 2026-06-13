@@ -685,6 +685,8 @@ function nextHalfInning(){
 
     drawAiHand();
 
+    gameState.phase = "PREPARE";
+
     updateBases();
     updateUI();
 }
