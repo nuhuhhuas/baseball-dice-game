@@ -255,16 +255,16 @@ function getBatModifier(card){
 
 function rollPitch(){
 
-    if(gameState.phase === "REACTION"){
+    if(gameState.phase !== "AT-BAT"){
 
-        addLog("Press Continue first.");
+    	addLog(
+        	"Current Phase: " +
+        	gameState.phase +
+        	". Press Continue."
+    	);
 
-        return;
+    	return;
     }
-
-    gameState.phase = "AT-BAT";
-
-    updateUI();
 
     const def1 = rollD6();
     const def2 = rollD6();
@@ -492,6 +492,15 @@ function updateUI(){
 }
 
 function continuePhase(){
+
+    if(gameState.phase === "PREPARE"){
+
+        gameState.phase = "AT-BAT";
+
+        updateUI();
+
+        return;
+    }
 
     if(gameState.phase === "REACTION"){
 
