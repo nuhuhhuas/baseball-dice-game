@@ -277,7 +277,7 @@ function rollPitch(){
         	atk1 = rollD6();
 
         	addLog(
-            		`Batting Eye: Die 1 ${oldRoll} → ${atk1}`
+            		`Batting Eye: Dice 1 ${oldRoll} → ${atk1}`
         	);
 
     	}else{
@@ -287,7 +287,7 @@ function rollPitch(){
         	atk2 = rollD6();
 
         	addLog(
-            		`Batting Eye: Die 2 ${oldRoll} → ${atk2}`
+            		`Batting Eye: Dice 2 ${oldRoll} → ${atk2}`
         	);
     	}
     }
@@ -339,7 +339,7 @@ function rollPitch(){
     );
 
     addLog(
-    	`Attack Roll: ${atk1}+${atk2} = ${attack}`
+    	`Attack Roll: ${atk1}+${atk2}${batMod >= 0 ? "+" : ""}${batMod}${pitchMod >= 0 ? "+" : ""}${pitchMod} = ${attack}`
     );
 
     document.getElementById("defRoll")
@@ -390,26 +390,36 @@ function rollPitch(){
 
     }else{
 
-        const roll =
-    		rollD6();
+    	if(atk1 === atk2){
 
-	if(roll <= 3){
+        	if(atk1 <= 2){
 
-    		single();
-		nextBatter();
+            		addLog("TWIN! SINGLE!");
+            		single();
 
-	}
-	else if(roll <= 5){
+        	}else if(atk1 <= 4){
 
-    		doubleHit();
-		nextBatter();
+            		addLog("TWIN! DOUBLE!");
+            		doubleHit();
 
-	}
-	else{
+        	}else if(atk1 === 5){
 
-    		homeRun();
-		nextBatter();
-	}
+            		addLog("TWIN! TRIPLE!");
+            		tripleHit();
+
+        	}else{
+
+            		addLog("TWIN! HOME RUN!");
+            		homeRun();
+        	}
+
+    	}else{
+
+        	addLog("HIT!");
+        	single();
+    	}
+
+    	nextBatter();
     }
 
     discardSelectedCard();
