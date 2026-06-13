@@ -214,18 +214,29 @@ function getPitchModifier(card){
     }
 }
 
-function aiCard(){
+function aiCard(phase){
 
-    if(aiHand.length === 0){
+    const validCards =
+        aiHand.filter(
+            card =>
+            getCardPhase(card) === phase
+        );
+
+    if(validCards.length === 0){
 
         return null;
     }
 
-    const index =
-        Math.floor(Math.random() * aiHand.length);
-
     const card =
-        aiHand[index];
+        validCards[
+            Math.floor(
+                Math.random() *
+                validCards.length
+            )
+        ];
+
+    const index =
+        aiHand.indexOf(card);
 
     aiHand.splice(index,1);
 
@@ -250,6 +261,50 @@ function getBatModifier(card){
 
         default:
             return 0;
+    }
+}
+
+function getCardPhase(card){
+
+    switch(card){
+
+        case "Defense Boost":
+        case "Speed":
+        case "Steal":
+            return "PREPARE";
+
+        case "Contact":
+        case "Power":
+        case "Intimidating Batter":
+        case "Bunt":
+
+        case "4SFB":
+        case "2SFB":
+        case "Curveball":
+        case "Sinker":
+        case "Changeup":
+        case "Cutter":
+        case "Forkball":
+        case "Slider":
+        case "Sweeper":
+        case "Splitter":
+            return "AT-BAT";
+
+        case "Batting Eye":
+        case "Home Run":
+        case "Fly Out":
+        case "Ground Out":
+        case "Pop Out":
+        case "Home Run Robbing":
+            return "REACTION";
+
+        case "Single":
+        case "Double":
+        case "Triple":
+            return "FIELDING";
+
+        default:
+            return null;
     }
 }
 
@@ -285,7 +340,8 @@ function rollPitch(){
     	addLog("Defense Boost: +3");
     }
 
-    const aiChoice = aiCard();
+    const aiChoice =
+    	aiCard("AT-BAT");
 
     if(aiChoice === "Batting Eye"){
 
