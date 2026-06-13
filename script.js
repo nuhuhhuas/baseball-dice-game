@@ -560,29 +560,37 @@ function continuePhase(){
 
     if(gameState.phase === "REACTION"){
 
-        if(gameState.pendingResult === "HOME_RUN"){
+    	gameState.phase = "FIELDING";
 
-            homeRun();
+    	updateUI();
 
-            nextBatter();
-
-            addLog("HOME RUN!");
-
-        }else if(gameState.pendingResult === "HIT"){
-
-            single();
-
-            nextBatter();
-
-            addLog("Single!");
-        }
-
-        gameState.pendingResult = null;
-
-        gameState.phase = "PREPARE";
-
-        updateUI();
+    	return;
     }
+
+    if(gameState.phase === "FIELDING"){
+
+    	if(gameState.pendingResult === "HOME_RUN"){
+
+        	homeRun();
+
+        	addLog("HOME RUN!");
+
+    	}else if(gameState.pendingResult === "HIT"){
+
+        	single();
+
+        	addLog("Single!");
+    	}
+
+    	gameState.pendingResult = null;
+
+    	nextBatter();
+
+    	updateUI();
+
+    	return;
+    }
+
 }
 
 function addLog(text){
