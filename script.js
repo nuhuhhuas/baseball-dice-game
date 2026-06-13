@@ -255,6 +255,13 @@ function getBatModifier(card){
 
 function rollPitch(){
 
+    if(gameState.phase === "REACTION"){
+
+        addLog("Press Continue first.");
+
+        return;
+    }
+
     gameState.phase = "AT-BAT";
 
     updateUI();
@@ -507,7 +514,7 @@ function continuePhase(){
 
         gameState.pendingResult = null;
 
-        gameState.phase = "END";
+        gameState.phase = "PREPARE";
 
         updateUI();
     }
