@@ -134,13 +134,11 @@ function playCard(card){
 
     if(card === "Defense Boost"){
 
-        defenseBoostActive = true;
+    	defenseBoostActive = true;
 
-        selectedCard = card;
+    	addLog("Defense Boost Activated");
 
-        addLog("Defense Boost Activated");
-
-        return;
+    	return;
     }
 
     selectedCard = card;
@@ -210,13 +208,16 @@ function getBatModifier(card){
     switch(card){
 
         case "Contact":
-            return 4;
+            return 2;
 
         case "Power":
-            return 5;
+            return 3;
+
+        case "Intimidating Batter":
+            return 2;
 
         case "Bunt":
-            return 2;
+            return -4;
 
         default:
             return 0;
@@ -257,6 +258,42 @@ function rollPitch(){
     if(aiChoice){
 
     	attack += getBatModifier(aiChoice);
+    }
+
+    if(aiChoice === "Contact"){
+    	addLog("Contact +2");
+    }
+
+    if(aiChoice === "Power"){
+    	addLog("Power +3");
+    }
+
+    if(aiChoice === "Intimidating Batter"){
+    	addLog("Intimidating Batter +2");
+    }
+
+    if(aiChoice === "Batting Eye"){
+
+    	if(atk1 <= atk2){
+
+        	atk1 = rollD6();
+
+        	addLog("Batting Eye rerolled Attack Die 1");
+
+    	}else{
+
+        	atk2 = rollD6();
+
+        	addLog("Batting Eye rerolled Attack Die 2");
+    	}
+    }
+
+    if(aiChoice === "Bunt"){
+
+    	addLog("Bunt -4");
+    	addLog("Bunt! All runners advance 1 base.");
+
+    	buntAdvance();
     }
 
     document.getElementById("defRoll")
@@ -435,6 +472,29 @@ function homeRun(){
     updateBases();
 
     addLog("HOME RUN!");
+}
+
+function buntAdvance(){
+
+    if(gameState.third){
+
+        scoreRun();
+        gameState.third = false;
+    }
+
+    if(gameState.second){
+
+        gameState.third = true;
+        gameState.second = false;
+    }
+
+    if(gameState.first){
+
+        gameState.second = true;
+        gameState.first = false;
+    }
+
+    updateBases();
 }
 
 function scoreRun(){
