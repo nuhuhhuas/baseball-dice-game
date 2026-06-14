@@ -5,6 +5,9 @@ let defenseBoostActive = false;
 let speedActive = false;
 let stealActive = false;
 
+let pendingGroundOut = false;
+let pendingFlyOut = false;
+
 let reactionCard = null;
 
 let playerHand = [];
@@ -936,27 +939,31 @@ function continuePhase(){
 		}else{
 
     			if(
-        			gameState.fieldingDefenseChoice === "Pop Out"
-    			){
+    				gameState.fieldingDefenseChoice === "Pop Out"
+			){
 
-        			addLog("POP OUT");
+    				addLog("POP OUT");
 
-    			}else if(
-        			gameState.fieldingDefenseChoice === "Ground Out"
-    			){
+			}else if(
+    				gameState.fieldingDefenseChoice === "Ground Out"
+			){
 
-        			addLog("GROUND OUT");
+    				pendingGroundOut = true;
 
-    			}else if(
-        			gameState.fieldingDefenseChoice === "Fly Out"
-    			){
+    				addLog("GROUND OUT");
 
-        			addLog("FLY OUT");
+			}else if(
+    				gameState.fieldingDefenseChoice === "Fly Out"
+			){
 
-    			}else{
+    				pendingFlyOut = true;
 
-        			addLog("OUT");
-    			}
+    				addLog("FLY OUT");
+
+			}else{
+
+    				addLog("OUT");
+			}
 
     			gameState.outs++;
 
