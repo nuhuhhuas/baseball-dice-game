@@ -222,7 +222,6 @@ function playCard(card){
             		card
         	);
 
-		discardCard(card);
 
         	return;
     	}
@@ -237,7 +236,6 @@ function playCard(card){
         	card
     	);
 
-    	discardCard(card);
 
     	return;
     }
@@ -770,6 +768,11 @@ function continuePhase(){
 
     	}
 
+    	if(reactionCard){
+
+    		discardCard(reactionCard);
+	}
+
     	gameState.phase = "FIELDING";
 
     	updateUI();
@@ -784,6 +787,11 @@ function continuePhase(){
     		gameState.outs++;
 
     		addLog("OUT");
+
+		if(reactionCard){
+
+    			discardCard(reactionCard);
+		}
 
     		reactionCard = null;
 
@@ -833,9 +841,16 @@ function continuePhase(){
 
     	gameState.pendingResult = null;
 
+	if(gameState.fieldingChoice){
+
+    		discardCard(
+        		gameState.fieldingChoice
+    		);
+	}
+
 	gameState.fieldingChoice = null;
 
-    	nextBatter();
+	nextBatter();
 
     	updateUI();
 
