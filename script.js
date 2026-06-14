@@ -929,16 +929,25 @@ function continuePhase(){
 
     		if(offenseTotal > defenseTotal){
 
-        		single();
+    			single();
 
-        		addLog("SAFE");
+    			addLog("SAFE");
 
-    		}else{
+		}else{
 
-        		gameState.outs++;
+    			gameState.outs++;
 
-        		addLog("OUT");
-    		}
+    			addLog("OUT");
+
+    			if(gameState.outs >= 3){
+
+        			addLog("SIDE RETIRED");
+
+        			nextHalfInning();
+
+        			return;
+    			}
+		}
 	}
 
     	gameState.pendingResult = null;
