@@ -799,6 +799,29 @@ function doubleHit(){
     addLog("Double");
 }
 
+function tripleHit(){
+
+    if(gameState.third){
+        scoreRun();
+    }
+
+    if(gameState.second){
+        scoreRun();
+    }
+
+    if(gameState.first){
+        scoreRun();
+    }
+
+    gameState.first = false;
+    gameState.second = false;
+    gameState.third = true;
+
+    updateBases();
+
+    addLog("Triple");
+}
+
 function homeRun(){
 
     let runs = 1;
