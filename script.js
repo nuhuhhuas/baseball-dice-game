@@ -866,29 +866,78 @@ function continuePhase(){
 
     	if(gameState.pendingResult === "HOME_RUN"){
 
-        	homeRun();
+    		homeRun();
 
-        	addLog("HOME RUN!");
+    		addLog("HOME RUN!");
 
-    	}else if(gameState.pendingResult === "HIT"){
+	}else if(gameState.pendingResult === "HIT"){
 
-    		if(gameState.fieldingChoice === "Triple"){
+    		let offenseBonus = 0;
+    		let defenseBonus = 0;
 
-        		tripleHit();
+    		if(gameState.fieldingChoice === "Single"){
 
-        		addLog("Triple!");
+        		offenseBonus = 1;
 
     		}else if(gameState.fieldingChoice === "Double"){
 
-        		doubleHit();
+        		offenseBonus = 2;
 
-        		addLog("Double!");
+    		}else if(gameState.fieldingChoice === "Triple"){
 
-    		}else{
+        		offenseBonus = 3;
+    		}
+
+    		if(
+        		gameState.fieldingDefenseChoice === "Pop Out"
+    		){
+
+        		defenseBonus = 1;
+
+    		}else if(
+        		gameState.fieldingDefenseChoice === "Ground Out"
+    		){
+
+        		defenseBonus = 2;
+
+    		}else if(
+        		gameState.fieldingDefenseChoice === "Fly Out"
+    		){
+
+        		defenseBonus = 3;
+    		}
+
+    		const offenseRoll =
+        		rollD6();
+
+    		const defenseRoll =
+        		rollD6();
+
+    		const offenseTotal =
+        		offenseRoll + offenseBonus;
+
+    		const defenseTotal =
+        		defenseRoll + defenseBonus;
+
+    		addLog(
+        		`Runner: ${offenseRoll}+${offenseBonus} = ${offenseTotal}`
+    		);
+
+    		addLog(
+        		`Defense: ${defenseRoll}+${defenseBonus} = ${defenseTotal}`
+    		);
+
+    		if(offenseTotal > defenseTotal){
 
         		single();
 
-        		addLog("Single!");
+        		addLog("SAFE");
+
+    		}else{
+
+        		gameState.outs++;
+
+        		addLog("OUT");
     		}
 	}
 
