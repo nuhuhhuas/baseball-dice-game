@@ -128,8 +128,13 @@ function drawHand(){
 
 function drawAiHand(){
 
+    const deck =
+        gameState.playerRole === "DEFENSE"
+        ? attackDeck
+        : defenseDeck;
+
     const shuffledDeck =
-        shuffle([...attackDeck]);
+        shuffle([...deck]);
 
     aiHand =
         shuffledDeck.slice(0,5);
@@ -329,6 +334,35 @@ function aiCard(phase){
     return card;
 }
 
+function aiDefenseCard(phase){
+
+    const validCards =
+        aiHand.filter(
+            card =>
+            getCardPhase(card) === phase
+        );
+
+    if(validCards.length === 0){
+
+        return null;
+    }
+
+    const chosen =
+        validCards[
+            Math.floor(
+                Math.random() *
+                validCards.length
+            )
+        ];
+
+    const index =
+        aiHand.indexOf(chosen);
+
+    aiHand.splice(index,1);
+
+    return chosen;
+}
+
 function getBatModifier(card){
 
     switch(card){
@@ -426,8 +460,18 @@ function rollPitch(){
     	addLog("Defense Boost: +3");
     }
 
-    const aiChoice =
-    	aiCard("AT-BAT");
+    let aiChoice = null;
+
+    if(gameState.playerRole === "DEFENSE"){
+
+    	aiChoice =
+        	aiCard("AT-BAT");
+
+    }else{
+
+    	aiChoice =
+        	aiDefenseCard("AT-BAT");
+    }
 
     if(aiChoice === "Batting Eye"){
 
@@ -458,40 +502,78 @@ function rollPitch(){
 
     if(selectedCard){
 
-    	pitchMod =
-        	getPitchModifier(selectedCard);
+    	if(gameState.playerRole === "DEFENSE"){
 
-    	attack += pitchMod;
+        	pitchMod =
+            		getPitchModifier(selectedCard);
 
-    	addLog(
-        	selectedCard +
-        	": " +
-        	pitchMod
-    	);
-    }
-
-    if(aiChoice){
-
-    	batMod =
-        	getBatModifier(aiChoice);
-
-    	attack += batMod;
-
-    	if(batMod !== 0){
+        	attack += pitchMod;
 
         	addLog(
-            		aiChoice +
+            		selectedCard +
+            		": " +
+            		pitchMod
+        	);
+
+    	}else{
+
+        	batMod =
+            		getBatModifier(selectedCard);
+
+        	attack += batMod;
+
+        	addLog(
+            		selectedCard +
             		": " +
             		(batMod > 0 ? "+" : "") +
             		batMod
         	);
     	}
+    }
 
-    	if(aiChoice === "Bunt"){
+    if(aiChoice){
 
-        	addLog("Bunt: All runners advance 1 base.");
+    	if(gameState.playerRole === "DEFENSE"){
 
-        	buntAdvance();
+        	batMod =
+            		getBatModifier(aiChoice);
+
+        	attack += batMod;
+
+        	if(batMod !== 0){
+
+            		addLog(
+                		aiChoice +
+                		": " +
+                		(batMod > 0 ? "+" : "") +
+                		batMod
+            		);
+        	}
+
+        	if(aiChoice === "Bunt"){
+
+            		addLog(
+                		"Bunt: All runners advance 1 base."
+            		);
+
+            		buntAdvance();
+        	}
+
+    	}else{
+
+        	pitchMod =
+            		getPitchModifier(aiChoice);
+
+        	attack += pitchMod;
+
+        	if(pitchMod !== 0){
+
+            		addLog(
+                		aiChoice +
+                		": " +
+                		pitchMod
+            		);
+        	}
     	}
     }
 
@@ -511,15 +593,30 @@ function rollPitch(){
         .innerText =
         `${atk1}+${atk2} = ${attack}`;
 
-    addLog(
-    	"Pitcher used: " +
-    	(selectedCard || "No Card")
-    );
+    if(gameState.playerRole === "DEFENSE"){
 
-    addLog(
-    	"Batter used: " +
-    	(aiChoice || "No Card")
-    );    
+    	addLog(
+        	"Pitcher used: " +
+        	(selectedCard || "No Card")
+    	);
+
+    	addLog(
+        	"Batter used: " +
+        	(aiChoice || "No Card")
+    	);
+
+    }else{
+
+    	addLog(
+        	"Pitcher used: " +
+        	(aiChoice || "No Card")
+    	);
+
+    	addLog(
+        	"Batter used: " +
+        	(selectedCard || "No Card")
+    	);
+    }    
 
     if(defense <= 3){
 
