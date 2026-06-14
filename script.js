@@ -222,6 +222,8 @@ function playCard(card){
             		card
         	);
 
+		discardCard(card);
+
         	return;
     	}
     }
@@ -784,6 +786,15 @@ function continuePhase(){
     		addLog("OUT");
 
     		reactionCard = null;
+
+    		if(gameState.outs >= 3){
+
+        		addLog("SIDE RETIRED");
+
+        		nextHalfInning();
+
+        		return;
+    		}
 
     		nextBatter();
 
