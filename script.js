@@ -445,15 +445,15 @@ function getCardPhase(card){
 
         case "Batting Eye":
         case "Home Run":
-        case "Fly Out":
-        case "Ground Out":
-        case "Pop Out":
         case "Home Run Robbing":
             return "REACTION";
 
         case "Single":
         case "Double":
         case "Triple":
+	case "Fly Out":
+        case "Ground Out":
+        case "Pop Out":
             return "FIELDING";
 
         default:
