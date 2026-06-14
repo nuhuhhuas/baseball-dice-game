@@ -948,9 +948,9 @@ function continuePhase(){
     				gameState.fieldingDefenseChoice === "Ground Out"
 			){
 
-    				pendingGroundOut = true;
-
     				addLog("GROUND OUT");
+
+    				resolveGroundOut();
 
 			}else if(
     				gameState.fieldingDefenseChoice === "Fly Out"
@@ -1211,6 +1211,48 @@ function nextBatter(){
     gameState.phase = "PREPARE";
 
     updateUI();
+}
+
+function resolveGroundOut(){
+
+    if(!gameState.first){
+
+        return;
+    }
+
+    const runnerRoll =
+        rollD6();
+
+    const defenseRoll =
+        rollD6();
+
+    addLog(
+        `Forced Runner: ${runnerRoll}`
+    );
+
+    addLog(
+        `Defense: ${defenseRoll}`
+    );
+
+    if(runnerRoll > defenseRoll){
+
+        gameState.second = true;
+        gameState.first = false;
+
+        addLog(
+            "Runner Safe at 2nd"
+        );
+
+    }else{
+
+        gameState.first = false;
+
+        gameState.outs++;
+
+        addLog(
+            "Runner Out"
+        );
+    }
 }
 
 function discardCard(card){
