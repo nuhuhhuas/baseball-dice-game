@@ -87,6 +87,8 @@ const gameState = {
     pendingResult: null,
 
     fieldingChoice: null,
+
+    fieldingDefenseChoice: null,
 	
     playerRole: "DEFENSE"
 
@@ -166,7 +168,8 @@ function playCard(card){
     if(
     	selectedCard === card ||
     	reactionCard === card ||
-    	gameState.fieldingChoice === card
+    	gameState.fieldingChoice === card ||
+    	gameState.fieldingDefenseChoice === card
     ){
 
     	if(selectedCard === card){
@@ -183,6 +186,11 @@ function playCard(card){
 
         	gameState.fieldingChoice = null;
     	}
+
+	if(gameState.fieldingDefenseChoice === card){
+
+    		gameState.fieldingDefenseChoice = null;
+	}
 
     	addLog("Unselected: " + card);
 
@@ -228,10 +236,25 @@ function playCard(card){
         	gameState.fieldingChoice = card;
 
         	addLog(
-            		"Fielding Card Selected: " +
+            		"Offense Selected: " +
             		card
         	);
 
+        	return;
+    	}
+
+    	if(
+        	card === "Pop Out" ||
+        	card === "Ground Out" ||
+        	card === "Fly Out"
+    	){
+
+        	gameState.fieldingDefenseChoice = card;
+
+        	addLog(
+            		"Defense Selected: " +
+            		card
+        	);
 
         	return;
     	}
