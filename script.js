@@ -163,6 +163,34 @@ function playCard(card){
     const cardPhase =
     	getCardPhase(card);
 
+    if(
+    	selectedCard === card ||
+    	reactionCard === card ||
+    	gameState.fieldingChoice === card
+    ){
+
+    	if(selectedCard === card){
+
+        	selectedCard = null;
+    	}
+
+    	if(reactionCard === card){
+
+        	reactionCard = null;
+    	}
+
+    	if(gameState.fieldingChoice === card){
+
+        	gameState.fieldingChoice = null;
+    	}
+
+    	addLog("Unselected: " + card);
+
+    	renderHand();
+
+    	return;
+    }
+
     if(cardPhase !== gameState.phase){
 
     	addLog(
@@ -174,35 +202,17 @@ function playCard(card){
     	return;
     }
 
-    if(card === "Defense Boost"){
+    if(
+    	card === "Defense Boost" ||
+    	card === "Speed" ||
+    	card === "Steal"
+    ){
 
-    	defenseBoostActive = true;
+    	selectedCard = card;
 
-    	addLog("Defense Boost Activated");
+    	addLog("Selected: " + card);
 
-	discardCard(card);
-
-    	return;
-    }
-
-    if(card === "Speed"){
-
-    	speedActive = true;
-
-    	addLog("Speed Activated");
-
-    	discardCard(card);
-
-    	return;
-    }
-
-    if(card === "Steal"){
-
-    	stealActive = true;
-
-    	addLog("Steal Activated");
-
-    	discardCard(card);
+    	renderHand();
 
     	return;
     }
@@ -737,6 +747,31 @@ function continuePhase(){
 
     if(gameState.phase === "PREPARE"){
 
+    	if(selectedCard === "Defense Boost"){
+
+        	defenseBoostActive = true;
+
+        	addLog("Defense Boost Activated");
+
+        	discardCard(selectedCard);
+
+    	}else if(selectedCard === "Speed"){
+
+        	speedActive = true;
+
+        	addLog("Speed Activated");
+
+        	discardCard(selectedCard);
+
+    	}else if(selectedCard === "Steal"){
+
+        	stealActive = true;
+
+        	addLog("Steal Activated");
+
+        	discardCard(selectedCard);
+    	}
+
     	selectedCard = null;
 
     	gameState.phase = "AT-BAT";
@@ -787,11 +822,6 @@ function continuePhase(){
     		gameState.outs++;
 
     		addLog("OUT");
-
-		if(reactionCard){
-
-    			discardCard(reactionCard);
-		}
 
     		reactionCard = null;
 
