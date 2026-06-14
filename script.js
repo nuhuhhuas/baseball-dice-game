@@ -1243,6 +1243,8 @@ function resolveGroundOut(){
             "Runner Safe at 2nd"
         );
 
+	updateBases();
+
     }else{
 
         gameState.first = false;
@@ -1252,6 +1254,8 @@ function resolveGroundOut(){
         addLog(
             "Runner Out"
         );
+
+	updateBases();
     }
 }
 
