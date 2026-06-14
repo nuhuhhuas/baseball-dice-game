@@ -5,6 +5,8 @@ let defenseBoostActive = false;
 let speedActive = false;
 let stealActive = false;
 
+let reactionCard = null;
+
 let playerHand = [];
 
 let aiHand = [];
@@ -217,6 +219,20 @@ function playCard(card){
 
         	return;
     	}
+    }
+
+    if(gameState.phase === "REACTION"){
+
+    	reactionCard = card;
+
+    	addLog(
+        	"Reaction Card Selected: " +
+        	card
+    	);
+
+    	discardCard(card);
+
+    	return;
     }
 
     selectedCard = card;
@@ -635,6 +651,26 @@ function continuePhase(){
 
     if(gameState.phase === "REACTION"){
 
+    	if(reactionCard === "Ground Out"){
+
+        	gameState.pendingResult = "OUT";
+
+        	addLog("Ground Out!");
+
+    	}else if(reactionCard === "Fly Out"){
+
+        	gameState.pendingResult = "OUT";
+
+        	addLog("Fly Out!");
+
+    	}else if(reactionCard === "Pop Out"){
+
+        	gameState.pendingResult = "OUT";
+
+        	addLog("Pop Out!");
+
+    	}
+
     	gameState.phase = "FIELDING";
 
     	updateUI();
@@ -643,6 +679,21 @@ function continuePhase(){
     }
 
     if(gameState.phase === "FIELDING"){
+
+    	if(gameState.pendingResult === "OUT"){
+
+    		gameState.outs++;
+
+    		addLog("OUT");
+
+    		reactionCard = null;
+
+    		nextBatter();
+
+    		updateUI();
+
+    		return;
+	}
 
     	if(gameState.pendingResult === "HOME_RUN"){
 
