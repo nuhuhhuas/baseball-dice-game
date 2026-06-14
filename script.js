@@ -950,7 +950,16 @@ function continuePhase(){
     		);
 	}
 
+	if(gameState.fieldingDefenseChoice){
+
+    		discardCard(
+        		gameState.fieldingDefenseChoice
+    		);
+	}
+
 	gameState.fieldingChoice = null;
+
+	gameState.fieldingDefenseChoice = null;
 
 	nextBatter();
 
