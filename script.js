@@ -935,9 +935,30 @@ function continuePhase(){
 
 		}else{
 
-    			gameState.outs++;
+    			if(
+        			gameState.fieldingDefenseChoice === "Pop Out"
+    			){
 
-    			addLog("OUT");
+        			addLog("POP OUT");
+
+    			}else if(
+        			gameState.fieldingDefenseChoice === "Ground Out"
+    			){
+
+        			addLog("GROUND OUT");
+
+    			}else if(
+        			gameState.fieldingDefenseChoice === "Fly Out"
+    			){
+
+        			addLog("FLY OUT");
+
+    			}else{
+
+        			addLog("OUT");
+    			}
+
+    			gameState.outs++;
 
     			if(gameState.outs >= 3){
 
