@@ -935,9 +935,23 @@ function continuePhase(){
 
     		if(offenseTotal > defenseTotal){
 
-    			single();
+    			let basesToAdvance = 1;
 
-    			addLog("SAFE");
+    			if(gameState.fieldingChoice === "Double"){
+
+        			basesToAdvance = 2;
+
+    			}else if(
+        			gameState.fieldingChoice === "Triple"
+    			){
+
+        			basesToAdvance = 3;
+    			}
+
+    			resolveAllRunners(
+        			offenseBonus,
+        			basesToAdvance
+    			);
 
 		}else{
 
@@ -1436,7 +1450,7 @@ function resolveBatter(
     		gameState.third = true;
 
     		addLog(
-        		"BATTER SAFE TO 3RD"
+        		"BATTER SAFE AT 3RD"
     		);
 
 	}else if(basesToAdvance === 2){
@@ -1444,7 +1458,7 @@ function resolveBatter(
     		gameState.second = true;
 
     		addLog(
-        		"BATTER SAFE TO 2ND"
+        		"BATTER SAFE AT 2ND"
     		);
 
 	}else{
@@ -1452,7 +1466,7 @@ function resolveBatter(
     		gameState.first = true;
 
     		addLog(
-        		"BATTER SAFE TO 1ST"
+        		"BATTER SAFE AT 1ST"
     		);
 	}
 
