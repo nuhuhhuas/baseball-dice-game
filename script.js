@@ -1205,6 +1205,12 @@ function nextHalfInning(){
     	gameState.playerRole = "DEFENSE";
     }
 
+    gameState.fieldingChoice = null;
+    gameState.fieldingDefenseChoice = null;
+
+    reactionCard = null;
+    selectedCard = null;
+
     document.getElementById("inning").innerText =
         `${gameState.half} ${gameState.inning}`;
 
