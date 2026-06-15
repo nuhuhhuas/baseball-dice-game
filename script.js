@@ -1343,7 +1343,6 @@ function resolveRunner(base, bonus, basesToAdvance){
 
         	scoreRun();
     	}
-    }
 
     }else{
 
