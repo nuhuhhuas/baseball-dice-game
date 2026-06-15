@@ -1283,46 +1283,67 @@ function resolveRunner(base, bonus, basesToAdvance){
 
     if(runnerTotal > defenseRoll){
 
-        addLog(
-    		`Runner on ${base}B SAFE`
- 	);
+    	if(base === 1){
 
-        if(base === 1){
+        	gameState.first = false;
 
-            gameState.first = false;
+        	if(basesToAdvance >= 3){
 
-            if(basesToAdvance >= 3){
+            		addLog(
+                		"Runner on 1B SCORES"
+            		);
 
-                scoreRun();
+            		scoreRun();
 
-            }else if(basesToAdvance === 2){
+        	}else if(basesToAdvance === 2){
 
-                gameState.third = true;
+            		addLog(
+                		"Runner on 1B ADVANCES TO 3B"
+            		);
 
-            }else{
+            		gameState.third = true;
 
-                gameState.second = true;
-            }
+        	}else{
 
-        }else if(base === 2){
+            		addLog(
+                		"Runner on 1B ADVANCES TO 2B"
+            		);
 
-            gameState.second = false;
+            		gameState.second = true;
+        	}
 
-            if(basesToAdvance >= 2){
+    	}else if(base === 2){
 
-                scoreRun();
+        	gameState.second = false;
 
-            }else{
+        	if(basesToAdvance >= 2){
 
-                gameState.third = true;
-            }
+            		addLog(
+                		"Runner on 2B SCORES"
+            		);
 
-        }else if(base === 3){
+            		scoreRun();
 
-            gameState.third = false;
+        	}else{
 
-            scoreRun();
-        }
+            		addLog(
+                		"Runner on 2B ADVANCES TO 3B"
+            		);
+
+            		gameState.third = true;
+        	}
+
+    	}else if(base === 3){
+
+        	gameState.third = false;
+
+        	addLog(
+            		"Runner on 3B SCORES"
+        	);
+
+        	scoreRun();
+    	}
+    }
 
     }else{
 
