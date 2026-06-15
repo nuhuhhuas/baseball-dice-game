@@ -880,6 +880,11 @@ function continuePhase(){
 
     		let offenseBonus = 0;
     		let defenseBonus = 0;
+	
+		if(defenseBoostActive){
+
+    			defenseBonus += 1;
+		}
 
     		if(gameState.fieldingChoice === "Single"){
 
@@ -924,6 +929,11 @@ function continuePhase(){
 
     		const defenseTotal =
         		defenseRoll + defenseBonus;
+
+			if(defenseBoostActive){
+
+    				defenseTotal += 1;
+			}
 
     		addLog(
         		`Runner: ${offenseRoll}+${offenseBonus} = ${offenseTotal}`
@@ -1229,7 +1239,9 @@ function nextBatter(){
     gameState.strikes = 0;
     gameState.balls = 0;
 
-    defenseBoostActive = false;
+    speedActive = false;
+    stealActive = false;
+    defenseBoostActive = false;;
 
     gameState.phase = "PREPARE";
 
