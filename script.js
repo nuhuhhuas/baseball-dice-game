@@ -1345,6 +1345,40 @@ function resolveRunner(base, bonus, basesToAdvance){
     updateBases();
 }
 
+function resolveAllRunners(
+    bonus,
+    basesToAdvance
+){
+
+    if(gameState.third){
+
+        resolveRunner(
+            3,
+            bonus,
+            basesToAdvance
+        );
+    }
+
+    if(gameState.second){
+
+        resolveRunner(
+            2,
+            bonus,
+            basesToAdvance
+        );
+    }
+
+    if(gameState.first){
+
+        resolveRunner(
+            1,
+            bonus,
+            basesToAdvance
+        );
+    }
+
+}
+
 function testRunner(){
 
     gameState.first = true;
@@ -1353,6 +1387,20 @@ function testRunner(){
 
     resolveRunner(
         1,
+        2,
+        2
+    );
+}
+
+function testAllRunners(){
+
+    gameState.first = true;
+    gameState.second = true;
+    gameState.third = true;
+
+    updateBases();
+
+    resolveAllRunners(
         2,
         2
     );
