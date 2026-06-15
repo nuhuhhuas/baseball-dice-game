@@ -1274,7 +1274,7 @@ function resolveRunner(base, bonus, basesToAdvance){
         runnerRoll + bonus;
 
     addLog(
-        `Runner: ${runnerRoll}+${bonus} = ${runnerTotal}`
+    	`Runner on ${base}B: ${runnerRoll}+${bonus} = ${runnerTotal}`
     );
 
     addLog(
@@ -1283,7 +1283,9 @@ function resolveRunner(base, bonus, basesToAdvance){
 
     if(runnerTotal > defenseRoll){
 
-        addLog("SAFE");
+        addLog(
+    		`Runner on ${base}B SAFE`
+ 	);
 
         if(base === 1){
 
@@ -1324,7 +1326,9 @@ function resolveRunner(base, bonus, basesToAdvance){
 
     }else{
 
-        addLog("RUNNER OUT");
+        addLog(
+    		`Runner on ${base}B OUT`
+	);
 
         gameState.outs++;
 
