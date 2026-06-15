@@ -1377,6 +1377,50 @@ function resolveAllRunners(
         );
     }
 
+    resolveBatter(
+        bonus
+    );
+}
+
+function resolveBatter(
+    bonus
+){
+
+    const batterRoll =
+        rollD6();
+
+    const defenseRoll =
+        rollD6();
+
+    const batterTotal =
+        batterRoll + bonus;
+
+    addLog(
+        `Batter: ${batterRoll}+${bonus} = ${batterTotal}`
+    );
+
+    addLog(
+        `Defense: ${defenseRoll}`
+    );
+
+    if(batterTotal > defenseRoll){
+
+        gameState.first = true;
+
+        addLog(
+            "BATTER SAFE"
+        );
+
+    }else{
+
+        gameState.outs++;
+
+        addLog(
+            "BATTER OUT"
+        );
+    }
+
+    updateBases();
 }
 
 function testRunner(){
