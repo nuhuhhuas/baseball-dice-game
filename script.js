@@ -8,6 +8,9 @@ let stealActive = false;
 let pendingGroundOut = false;
 let pendingFlyOut = false;
 
+let runningBonus = 0;
+let runningBases = 1;
+
 let reactionCard = null;
 
 let playerHand = [];
@@ -1257,6 +1260,102 @@ function resolveGroundOut(){
 
 	updateBases();
     }
+}
+
+function resolveRunner(base, bonus, basesToAdvance){
+
+    const runnerRoll =
+        rollD6();
+
+    const defenseRoll =
+        rollD6();
+
+    const runnerTotal =
+        runnerRoll + bonus;
+
+    addLog(
+        `Runner: ${runnerRoll}+${bonus} = ${runnerTotal}`
+    );
+
+    addLog(
+        `Defense: ${defenseRoll}`
+    );
+
+    if(runnerTotal > defenseRoll){
+
+        addLog("SAFE");
+
+        if(base === 1){
+
+            gameState.first = false;
+
+            if(basesToAdvance >= 3){
+
+                scoreRun();
+
+            }else if(basesToAdvance === 2){
+
+                gameState.third = true;
+
+            }else{
+
+                gameState.second = true;
+            }
+
+        }else if(base === 2){
+
+            gameState.second = false;
+
+            if(basesToAdvance >= 2){
+
+                scoreRun();
+
+            }else{
+
+                gameState.third = true;
+            }
+
+        }else if(base === 3){
+
+            gameState.third = false;
+
+            scoreRun();
+        }
+
+    }else{
+
+        addLog("RUNNER OUT");
+
+        gameState.outs++;
+
+        if(base === 1){
+
+            gameState.first = false;
+
+        }else if(base === 2){
+
+            gameState.second = false;
+
+        }else if(base === 3){
+
+            gameState.third = false;
+        }
+    }
+
+    updateBases();
+}
+
+function testRunner(){
+
+    gameState.first = true;
+
+    updateBases();
+
+    resolveRunner(
+        1,
+        2,
+        2
+    );
 }
 
 function discardCard(card){
