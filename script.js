@@ -1302,11 +1302,20 @@ function resolveRunner(base, bonus, basesToAdvance){
     const defenseRoll =
         rollD6();
 
+    let speedBonus = 0;
+
+    if(speedActive){
+
+    	speedBonus = 1;
+    }
+
     const runnerTotal =
-        runnerRoll + bonus;
+    	runnerRoll +
+    	bonus +
+    	speedBonus;
 
     addLog(
-    	`Runner on ${base}B: ${runnerRoll}+${bonus} = ${runnerTotal}`
+    	`Runner on ${base}B: ${runnerRoll}+${bonus}+${speedBonus} = ${runnerTotal}`
     );
 
     addLog(
@@ -1452,11 +1461,20 @@ function resolveBatter(
     const defenseRoll =
         rollD6();
 
+    let speedBonus = 0;
+
+    if(speedActive){
+
+    	speedBonus = 1;
+    }
+
     const batterTotal =
-        batterRoll + bonus;
+    	batterRoll +
+    	bonus +
+    	speedBonus;
 
     addLog(
-        `Batter: ${batterRoll}+${bonus} = ${batterTotal}`
+    	`Batter: ${batterRoll}+${bonus}+${speedBonus} = ${batterTotal}`
     );
 
     addLog(
