@@ -1382,12 +1382,14 @@ function resolveAllRunners(
     }
 
     resolveBatter(
-        bonus
+    	bonus,
+    	basesToAdvance
     );
 }
 
 function resolveBatter(
-    bonus
+    bonus,
+    basesToAdvance
 ){
 
     const batterRoll =
@@ -1409,11 +1411,30 @@ function resolveBatter(
 
     if(batterTotal > defenseRoll){
 
-        gameState.first = true;
+        if(basesToAdvance === 3){
 
-        addLog(
-            "BATTER SAFE"
-        );
+    		gameState.third = true;
+
+    		addLog(
+        		"BATTER SAFE TO 3RD"
+    		);
+
+	}else if(basesToAdvance === 2){
+
+    		gameState.second = true;
+
+    		addLog(
+        		"BATTER SAFE TO 2ND"
+    		);
+
+	}else{
+
+    		gameState.first = true;
+
+    		addLog(
+        		"BATTER SAFE TO 1ST"
+    		);
+	}
 
     }else{
 
