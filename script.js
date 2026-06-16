@@ -1456,7 +1456,7 @@ function resolveAllRunners(
     resolveBatter(
     	bonus,
     	basesToAdvance
-    );
+    ) return;
 
     updateBases();
 }
@@ -1471,6 +1471,13 @@ function resolveBatter(
 
     const defenseRoll =
         rollD6();
+
+    let defenseBonus = 0;
+
+    if(defenseBoostActive){
+
+    	defenseBonus = 3;
+    }
 
     let speedBonus = 0;
 
@@ -1488,11 +1495,15 @@ function resolveBatter(
     	`Batter: ${batterRoll}+${bonus}+${speedBonus} = ${batterTotal}`
     );
 
+    const defenseTotal =
+    	defenseRoll +
+    	defenseBonus;
+
     addLog(
-        `Defense: ${defenseRoll}`
+    	`Defense: ${defenseRoll}+${defenseBonus} = ${defenseTotal}`
     );
 
-    if(batterTotal > defenseRoll){
+    if(batterTotal > defenseTotal){
 
         if(basesToAdvance === 3){
 
@@ -1521,14 +1532,27 @@ function resolveBatter(
 
     }else{
 
-        gameState.outs++;
+    	gameState.outs++;
 
-        addLog(
-            "BATTER OUT"
-        );
+    	addLog(
+        	"BATTER OUT"
+    	);
+
+    	if(gameState.outs >= 3){
+
+        	addLog(
+            		"SIDE RETIRED"
+        	);
+
+        	nextHalfInning();
+
+        	return true;
+    	}
     }
 
     updateBases();
+
+    return false;
 }
 
 function testRunner(){
