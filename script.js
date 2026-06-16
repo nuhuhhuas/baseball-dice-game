@@ -678,8 +678,6 @@ function rollPitch(){
 
     	selectedCard = null;
 
-    	defenseBoostActive = false;
-
     	return;
     }
 
@@ -883,7 +881,7 @@ function continuePhase(){
 	
 		if(defenseBoostActive){
 
-    			defenseBonus += 1;
+    			defenseBonus += 3;
 		}
 
     		if(gameState.fieldingChoice === "Single"){
@@ -930,11 +928,6 @@ function continuePhase(){
     		const defenseTotal =
         		defenseRoll + defenseBonus;
 
-			if(defenseBoostActive){
-
-    				defenseTotal += 1;
-			}
-
     		addLog(
     			`Offense: ${offenseRoll}+${offenseBonus} = ${offenseTotal}`
 		);
@@ -962,6 +955,8 @@ function continuePhase(){
         			offenseBonus,
         			basesToAdvance
     			);
+
+			defenseBoostActive = false;
 
 		}else{
 
@@ -1241,7 +1236,6 @@ function nextBatter(){
 
     speedActive = false;
     stealActive = false;
-    defenseBoostActive = false;;
 
     gameState.phase = "PREPARE";
 
@@ -1393,6 +1387,15 @@ function resolveRunner(base, bonus, basesToAdvance){
 
         gameState.outs++;
 
+	if(gameState.outs >= 3){
+
+    		addLog("SIDE RETIRED");
+
+    		nextHalfInning();
+
+    		return true;
+	}
+
         if(base === 1){
 
             gameState.first = false;
@@ -1408,6 +1411,8 @@ function resolveRunner(base, bonus, basesToAdvance){
     }
 
     updateBases();
+
+    return false;
 }
 
 function resolveAllRunners(
@@ -1417,34 +1422,40 @@ function resolveAllRunners(
 
     if(gameState.third){
 
-        resolveRunner(
-            3,
-            bonus,
-            basesToAdvance
-        );
+    	if(
+        	resolveRunner(
+            		3,
+            		bonus,
+            		basesToAdvance
+        	)
+    	) return;
     }
 
     if(gameState.second){
 
-        resolveRunner(
-            2,
-            bonus,
-            basesToAdvance
-        );
+    	if(
+        	resolveRunner(
+            		2,
+            		bonus,
+            		basesToAdvance
+        	)
+    	) return;
     }
 
     if(gameState.first){
 
-        resolveRunner(
-            1,
-            bonus,
-            basesToAdvance
-        );
+    	if(
+        	resolveRunner(
+            		1,
+            		bonus,
+            		basesToAdvance
+        	)
+    	) return;
     }
 
     resolveBatter(
-        bonus,
-        basesToAdvance
+    	bonus,
+    	basesToAdvance
     );
 
     updateBases();
