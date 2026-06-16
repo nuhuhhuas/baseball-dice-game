@@ -1453,12 +1453,13 @@ function resolveAllRunners(
     	) return;
     }
 
-    resolveBatter(
-    	bonus,
-    	basesToAdvance
+    if(
+    	resolveBatter(
+    		bonus,
+    		basesToAdvance
+	)
     ) return;
 
-    updateBases();
 }
 
 function resolveBatter(
