@@ -903,19 +903,19 @@ function continuePhase(){
         		gameState.fieldingDefenseChoice === "Pop Out"
     		){
 
-        		defenseBonus = 1;
+        		defenseBonus += 1;
 
     		}else if(
         		gameState.fieldingDefenseChoice === "Ground Out"
     		){
 
-        		defenseBonus = 2;
+        		defenseBonus += 2;
 
     		}else if(
         		gameState.fieldingDefenseChoice === "Fly Out"
     		){
 
-        		defenseBonus = 3;
+        		defenseBonus += 3;
     		}
 
     		const offenseRoll =
@@ -936,8 +936,8 @@ function continuePhase(){
 			}
 
     		addLog(
-        		`Runner: ${offenseRoll}+${offenseBonus} = ${offenseTotal}`
-    		);
+    			`Offense: ${offenseRoll}+${offenseBonus} = ${offenseTotal}`
+		);
 
     		addLog(
         		`Defense: ${defenseRoll}+${defenseBonus} = ${defenseTotal}`
