@@ -1181,6 +1181,8 @@ function scoreRun(){
 
 function nextHalfInning(){
 
+    defenseBoostActive = false;
+
     addLog("CHANGING SIDES");
 
     gameState.outs = 0;
@@ -1236,6 +1238,7 @@ function nextBatter(){
 
     speedActive = false;
     stealActive = false;
+    defenseBoostActive = false;
 
     gameState.phase = "PREPARE";
 
