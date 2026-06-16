@@ -956,8 +956,6 @@ function continuePhase(){
         			basesToAdvance
     			);
 
-			defenseBoostActive = false;
-
 		}else{
 
     			if(
