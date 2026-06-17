@@ -95,6 +95,8 @@ const gameState = {
     fieldingChoice: null,
 
     fieldingDefenseChoice: null,
+
+    contactType: null,
 	
     playerRole: "DEFENSE"
 
@@ -720,6 +722,28 @@ function rollPitch(){
     	}
 
     }else{
+
+    	const contactDifference =
+        	attack - defense;
+
+    	if(contactDifference <= 2){
+
+        	gameState.contactType = "POP_UP";
+
+        	addLog("POP-UP");
+
+    	}else if(contactDifference <= 4){
+
+        	gameState.contactType = "GROUND_BALL";
+
+        	addLog("GROUND BALL");
+
+    	}else{
+
+        	gameState.contactType = "FLY_BALL";
+
+        	addLog("FLY BALL");
+    	}
 
     	if(atk1 === 6 && atk2 === 6){
 
