@@ -168,6 +168,59 @@ function renderHand(){
     });
 }
 
+function canUseOffenseCard(card){
+
+    if(gameState.contactType === "POP_UP"){
+
+        return card === "Single";
+    }
+
+    if(gameState.contactType === "GROUND_BALL"){
+
+        return (
+            card === "Single" ||
+            card === "Double"
+        );
+    }
+
+    if(gameState.contactType === "FLY_BALL"){
+
+        return (
+            card === "Single" ||
+            card === "Double" ||
+            card === "Triple"
+        );
+    }
+
+    return true;
+}
+
+function canUseDefenseCard(card){
+
+    if(gameState.contactType === "POP_UP"){
+
+        return card === "Pop Out";
+    }
+
+    if(gameState.contactType === "GROUND_BALL"){
+
+        return (
+            card === "Pop Out" ||
+            card === "Ground Out"
+        );
+    }
+
+    if(gameState.contactType === "FLY_BALL"){
+
+        return (
+            card === "Pop Out" ||
+            card === "Fly Out"
+        );
+    }
+
+    return true;
+}
+
 function playCard(card){
 
     const cardPhase =
@@ -236,36 +289,58 @@ function playCard(card){
     if(gameState.phase === "FIELDING"){
 
     	if(
-        	card === "Single" ||
-        	card === "Double" ||
-        	card === "Triple"
-    	){
+    		card === "Single" ||
+    		card === "Double" ||
+    		card === "Triple"
+	){
 
-        	gameState.fieldingChoice = card;
+    		if(!canUseOffenseCard(card)){
 
-        	addLog(
-            		"Offense Selected: " +
-            		card
-        	);
+        		addLog(
+            			card +
+            			" cannot be used on " +
+            			gameState.contactType
+        		);
 
-        	return;
-    	}
+        		return;
+    		}
+
+    		gameState.fieldingChoice = card;
+
+    		addLog(
+        		"Offense Selected: " +
+        		card
+    		);
+
+    		return;
+	}
 
     	if(
-        	card === "Pop Out" ||
-        	card === "Ground Out" ||
-        	card === "Fly Out"
-    	){
+    		card === "Pop Out" ||
+    		card === "Ground Out" ||
+    		card === "Fly Out"
+	){
 
-        	gameState.fieldingDefenseChoice = card;
+    		if(!canUseDefenseCard(card)){
 
-        	addLog(
-            		"Defense Selected: " +
-            		card
-        	);
+        		addLog(
+            			card +
+            			" cannot be used on " +
+            			gameState.contactType
+        		);
 
-        	return;
-    	}
+        		return;
+    		}
+
+    		gameState.fieldingDefenseChoice = card;
+
+    		addLog(
+        		"Defense Selected: " +
+        		card
+    		);
+
+    		return;
+	}
     }
 
     if(gameState.phase === "REACTION"){
