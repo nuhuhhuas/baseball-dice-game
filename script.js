@@ -1396,6 +1396,30 @@ function resolveRunner(base, bonus, basesToAdvance){
     const defenseRoll =
         rollD6();
 
+    let defenseBonus = 0;
+
+    if(gameState.fieldingDefenseChoice === "Pop Out"){
+
+    	defenseBonus = 1;
+
+    }else if(
+    	gameState.fieldingDefenseChoice === "Ground Out"
+    ){
+
+    	defenseBonus = 2;
+
+    }else if(
+    	gameState.fieldingDefenseChoice === "Fly Out"
+    ){
+
+    	defenseBonus = 3;
+    }
+
+    if(defenseBoostActive){
+
+    	defenseBonus += 3;
+    }
+
     let speedBonus = 0;
 
     if(speedActive){
@@ -1412,11 +1436,15 @@ function resolveRunner(base, bonus, basesToAdvance){
     	`Runner on ${base}B: ${runnerRoll}+${bonus}+${speedBonus} = ${runnerTotal}`
     );
 
+    const defenseTotal =
+    	defenseRoll +
+    	defenseBonus;
+
     addLog(
-        `Defense: ${defenseRoll}`
+    	`Defense: ${defenseRoll}+${defenseBonus} = ${defenseTotal}`
     );
 
-    if(runnerTotal > defenseRoll){
+    if(runnerTotal > defenseTotal){
 
     	if(base === 1){
 
@@ -1575,9 +1603,26 @@ function resolveBatter(
 
     let defenseBonus = 0;
 
-    if(defenseBoostActive){
+    if(gameState.fieldingDefenseChoice === "Pop Out"){
+
+    	defenseBonus = 1;
+
+    }else if(
+    	gameState.fieldingDefenseChoice === "Ground Out"
+    ){
+
+    	defenseBonus = 2;
+
+    }else if(
+    	gameState.fieldingDefenseChoice === "Fly Out"
+    ){
 
     	defenseBonus = 3;
+    }
+
+    if(defenseBoostActive){
+
+    	defenseBonus += 3;
     }
 
     let speedBonus = 0;
