@@ -1062,6 +1062,7 @@ function continuePhase(){
 			){
 
     				addLog("POP OUT");
+				addlog("BATTER OUT");
 
 			}else if(
     				gameState.fieldingDefenseChoice === "Ground Out"
@@ -1078,6 +1079,7 @@ function continuePhase(){
     				pendingFlyOut = true;
 
     				addLog("FLY OUT");
+				addlog("BATTER OUT");
 
 			}else{
 
