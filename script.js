@@ -1355,15 +1355,31 @@ function resolveGroundOut(){
     const defenseRoll =
         rollD6();
 
+    let defenseBonus = 0;
+
+    if(gameState.fieldingDefenseChoice === "Ground Out"){
+
+        defenseBonus += 2;
+    }
+
+    if(defenseBoostActive){
+
+        defenseBonus += 3;
+    }
+
+    const defenseTotal =
+        defenseRoll +
+        defenseBonus;
+
     addLog(
         `Forced Runner: ${runnerRoll}`
     );
 
     addLog(
-        `Defense: ${defenseRoll}`
+        `Defense: ${defenseRoll}+${defenseBonus} = ${defenseTotal}`
     );
 
-    if(runnerRoll > defenseRoll){
+    if(runnerRoll > defenseTotal){
 
         gameState.second = true;
         gameState.first = false;
@@ -1372,7 +1388,7 @@ function resolveGroundOut(){
             "Runner Safe at 2nd"
         );
 
-	updateBases();
+        updateBases();
 
     }else{
 
@@ -1384,7 +1400,7 @@ function resolveGroundOut(){
             "Runner Out"
         );
 
-	updateBases();
+        updateBases();
     }
 }
 
